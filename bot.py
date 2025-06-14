@@ -1,10 +1,14 @@
+from apscheduler.schedulers.background import BackgroundScheduler
+from scraper import scrape_itpark_events
 import os
 import json
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
-
+scheduler = BackgroundScheduler()
+scheduler.add_job(scrape_itpark_events, "interval", hours=12)
+scheduler.start()
 # Logging sozlamalari
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
